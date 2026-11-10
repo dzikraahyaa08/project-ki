@@ -386,3 +386,33 @@ Saat diminta mendemonstrasikan aplikasi di hadapan dosen:
 3. **Langkah 3**: Buka menu sidebar **Audit Keamanan (A5)**. Tunjukkan bahwa insiden kegagalan login tadi sudah tercatat lengkap dengan status DANGER dan rincian waktu (Membuktikan **Accounting**).
 4. **Langkah 4**: Gunakan dropdown filter severity untuk memilih "DANGER" atau "WARNING", kemudian klik tombol **Export CSV** (Membuktikan **Auditing**).
 5. **Langkah 5**: Buka halaman Storefront (`/`), masukkan barang ke keranjang dan lakukan checkout (Membuktikan integritas alur transaksi dan **Availability/Assurance**).
+
+---
+
+## BAB VI: LAMPIRAN BUKTI TANGKAPAN LAYAR (SCREENSHOT) SISTEM & PENGUJIAN 5A
+
+Berikut merupakan tangkapan layar langsung pengujian fitur keamanan 5A pada web Luxury Store yang telah di-deploy (URL Produksi: `https://projectki2.vercel.app/`):
+
+### 6.1 Antarmuka Login Kredensial Pengguna (`/login`)
+![Login Kredensial](screenshots/ss1_login_normal.png)
+*Keterangan: Halaman autentikasi utama untuk verifikasi username dan password administrator sebelum mendapatkan sesi token.*
+
+### 6.2 Pengujian Autentikasi & Brute-Force Lockout Countdown
+![Brute Force Lockout](screenshots/ss2_login_locked.png)
+*Keterangan: Bukti nyata pencegahan serangan Brute-Force. Form login otomatis terkunci selama 60 detik disertai pesan peringatan merah dan hitung mundur setelah 3 kali percobaan gagal.*
+
+### 6.3 Panel Dashboard Utama & Indikator Status Keamanan 5A (`/admin/dashboard`)
+![Dashboard Status 5A](screenshots/ss3_dashboard.png)
+*Keterangan: Dashboard administrator membuktikan otorisasi (RBAC). Menampilkan widget 'Keamanan (A5) Aktif (100%)' dan ringkasan inventaris produk.*
+
+### 6.4 Konsol Audit Keamanan — Filter Insiden Bahaya / DANGER (`/admin/audit-logs`)
+![Audit Log Danger](screenshots/ss4_audit_danger.png)
+*Keterangan: Bukti Accounting & Auditing. Sistem mencatat insiden percobaan brute-force sebagai event 'AUTH_BRUTE_FORCE_LOCKOUT' dengan tingkat keparahan DANGER dan status LOCKED.*
+
+### 6.5 Konsol Audit Keamanan — Filter Peringatan / WARNING
+![Audit Log Warning](screenshots/ss5_audit_warning.png)
+*Keterangan: Bukti pencatatan berkala setiap percobaan login salah sebagai event 'AUTH_LOGIN_FAILED' lengkap dengan jumlah percobaan (1/3, 2/3).*
+
+### 6.6 Konsol Audit Keamanan — Filter Informasi / INFO & Bukti Ekspor CSV
+![Audit Log Info](screenshots/ss6_audit_info.png)
+*Keterangan: Bukti pencatatan aktivitas rutin (AUTH_LOGOUT, AUDIT_EXPORT_CSV, dan SYSTEM_BOOT) serta kesiapan laporan audit untuk diekspor.*
